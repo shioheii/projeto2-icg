@@ -1,0 +1,11 @@
+C:\Users\user\Documents\INFORMATICA\PROJETOS\ICG\2 BIMESTRE\projeto2\projeto2\bin\Debug\projeto2.exe.config
+C:\Users\user\Documents\INFORMATICA\PROJETOS\ICG\2 BIMESTRE\projeto2\projeto2\bin\Debug\projeto2.exe
+C:\Users\user\Documents\INFORMATICA\PROJETOS\ICG\2 BIMESTRE\projeto2\projeto2\bin\Debug\projeto2.pdb
+C:\Users\user\Documents\INFORMATICA\PROJETOS\ICG\2 BIMESTRE\projeto2\projeto2\obj\Debug\projeto2.csproj.AssemblyReference.cache
+C:\Users\user\Documents\INFORMATICA\PROJETOS\ICG\2 BIMESTRE\projeto2\projeto2\obj\Debug\projeto2.csproj.SuggestedBindingRedirects.cache
+C:\Users\user\Documents\INFORMATICA\PROJETOS\ICG\2 BIMESTRE\projeto2\projeto2\obj\Debug\projeto2.Form1.resources
+C:\Users\user\Documents\INFORMATICA\PROJETOS\ICG\2 BIMESTRE\projeto2\projeto2\obj\Debug\projeto2.Properties.Resources.resources
+C:\Users\user\Documents\INFORMATICA\PROJETOS\ICG\2 BIMESTRE\projeto2\projeto2\obj\Debug\projeto2.csproj.GenerateResource.cache
+C:\Users\user\Documents\INFORMATICA\PROJETOS\ICG\2 BIMESTRE\projeto2\projeto2\obj\Debug\projeto2.csproj.CoreCompileInputs.cache
+C:\Users\user\Documents\INFORMATICA\PROJETOS\ICG\2 BIMESTRE\projeto2\projeto2\obj\Debug\projeto2.exe
+C:\Users\user\Documents\INFORMATICA\PROJETOS\ICG\2 BIMESTRE\projeto2\projeto2\obj\Debug\projeto2.pdb
