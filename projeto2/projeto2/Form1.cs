@@ -15,11 +15,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.VisualBasic;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace projeto2
 {
@@ -32,29 +34,27 @@ namespace projeto2
 
         bool marcarCoordenadas = false;
         bool validarDesenho = false;
-        int tipoDesenho = 0; // 1 - Reta / 2 - Retangulo / 3 - Circulo / 4 - Elipse / 5 - Trialgulo / 6 - Losango / 7 - Pentagono
+        int desenhoSelecionado = 0; // 1 - Reta / 2 - Retangulo / 3 - Circulo / 4 - Elipse / 5 - Trialgulo / 6 - Losango / 7 - Pentagono
         int clicks = 0;
         int[] coordenadas = new int[10];
-        int indiceCoordenadas = 0;
-        float formatoLinha = { 1 };
-
         int raio, altura, largura; // Caso da elipse e circulo // Dá pra fazer var local 
-
+        int indiceCoordenadas = 0;
+        int formatoSelecionado = 1;
+        float[] formatoLinha = { 1 };
+        int espessuraSelecionada = 1;
+        int espessura = 1;
+        int corSelecionada = 1;
+        Color cor;
+        
         Color color(int r, int g, int b, PaintEventArgs e)
         {
             return Color.FromArgb(r, g, b);
         }
-
-        /*Pen caneta(Color cor, int espessura, float[] formatoLinha, PaintEventArgs e)
-        {
-            Pen caneta = new Pen(cor, espessura);
-            caneta.DashPattern = formatoLinha; 
-            return caneta;
-        }*/
         
-        Pen caneta(Color cor, int espessura, PaintEventArgs e) // Só pra testes manuais
+        Pen criarCaneta(Color cor, float[] fLinha, int espessura, PaintEventArgs e) // Só pra testes manuais
         {
             Pen caneta = new Pen(cor, espessura);
+            caneta.DashPattern = fLinha;
             return caneta;
         }
 
@@ -108,21 +108,61 @@ namespace projeto2
 
         int getQtdClicksDesenho()
         {
-            if (tipoDesenho == 1) // Linha
+            if (desenhoSelecionado == 1) // Linha
                 return 2;
-            if (tipoDesenho == 2) // Retangulo
+            if (desenhoSelecionado == 2) // Retangulo
                 return 2;
-            if (tipoDesenho == 3) // Circulo  
+            if (desenhoSelecionado == 3) // Circulo  
                 return 1;
-            if (tipoDesenho == 4) // Elipse
+            if (desenhoSelecionado == 4) // Elipse
                 return 1;
-            if (tipoDesenho == 5) // Triangulo
+            if (desenhoSelecionado == 5) // Triangulo
                 return 3;
-            if (tipoDesenho == 6) // Losango
+            if (desenhoSelecionado == 6) // Losango
                 return 4;
-            if (tipoDesenho == 7) // Pentagono
+            if (desenhoSelecionado == 7) // Pentagono
                 return 5;
             return -1;
+        }
+
+        void salvarDesenhos()
+        {
+            // Desenho // Cor // Formato // Espessura // Raio ou Largura e Altura // Coordenadas
+            MessageBox.Show("Oi");
+
+            String txt = "" + desenhoSelecionado + " " + corSelecionada + " " + formatoSelecionado + " " + espessuraSelecionada + " ";
+            File.AppendAllText(@"C:\Users\user\Documents\INFORMATICA\PROJETOS\ICG\2 BIMESTRE\dados.txt", txt);
+
+            if (desenhoSelecionado == 3)
+                File.AppendAllText(@"C:\Users\user\Documents\INFORMATICA\PROJETOS\ICG\2 BIMESTRE\dados.txt", raio + " ");
+            else if (desenhoSelecionado == 4)
+                File.AppendAllText(@"C:\Users\user\Documents\INFORMATICA\PROJETOS\ICG\2 BIMESTRE\dados.txt", altura + " " + largura + " ");
+
+            for (int i = 0; i < getQtdClicksDesenho() * 2; i++)
+                File.AppendAllText(@"C:\Users\user\Documents\INFORMATICA\PROJETOS\ICG\2 BIMESTRE\dados.txt", coordenadas[i] + " ");
+            File.AppendAllText(@"C:\Users\user\Documents\INFORMATICA\PROJETOS\ICG\2 BIMESTRE\dados.txt", "" + Environment.NewLine);
+        }
+
+        void definirCor(PaintEventArgs e)
+        {
+            if (corSelecionada == 1)
+                cor = color(0, 0, 0, e);
+            else if (corSelecionada == 2)
+                cor = color(127, 127, 127, e);
+        }
+
+        void definirFormatoLinha(int opc)
+        {
+            if (opc == 1)
+                formatoLinha = new float[1] { 1 };
+            else if (opc == 2)
+                formatoLinha = new float[2] { 2, 2 };
+            else if (opc == 3)
+                formatoLinha = new float[2] { 10, 5 };
+            else if (opc == 4)
+                formatoLinha = new float[4] { 10, 3, 2, 3 };
+            else
+                formatoLinha = new float[4] { 20, 4, 10, 4 };
         }
 
         void permitirInvalidate()
@@ -138,34 +178,36 @@ namespace projeto2
         {
             if (validarDesenho)
             {
-                if (tipoDesenho == 1)
+                if (desenhoSelecionado == 1)
                     linha(coordenadas[0], coordenadas[1], coordenadas[2], coordenadas[3], caneta, e);
-                else if (tipoDesenho == 2)
+                else if (desenhoSelecionado == 2)
                     retangulo(coordenadas, caneta, e);
-                else if (tipoDesenho == 3)
+                else if (desenhoSelecionado == 3)
                     circulo(coordenadas, caneta, e);
-                else if (tipoDesenho == 4)
+                else if (desenhoSelecionado == 4)
                     elipse(coordenadas, caneta, e);
-                else if (tipoDesenho == 5)
+                else if (desenhoSelecionado == 5)
                     triangulo(coordenadas, caneta, e);
-                else if (tipoDesenho == 6)
+                else if (desenhoSelecionado == 6)
                     losango(coordenadas, caneta, e);
-                else if (tipoDesenho == 7)
+                else if (desenhoSelecionado == 7)
                     pentagono(coordenadas, caneta, e);
 
-                marcarCoordenadas = false;
-                validarDesenho = false;
+                salvarDesenhos();
+
+                //marcarCoordenadas = false;
+                //validarDesenho = false;
                 indiceCoordenadas = 0;
-                tipoDesenho = 0;
+                //tipoDesenho = 0;
                 clicks = 0;
             }
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            int[] p = { 200, 200, 300, 100, 400, 400, 300, 300 }; // teste manual
-            Pen objetoCaneta = caneta(color(150, 0, 0, e), 1, e); // teste manual
-            desenharPaint(objetoCaneta, e);
+            definirCor(e);
+            Pen caneta = criarCaneta(cor, formatoLinha, espessura, e);
+            desenharPaint(caneta, e);
         }
 
         private void Form1_MouseClick(object sender, MouseEventArgs e)
@@ -184,14 +226,14 @@ namespace projeto2
         private void button1_Click(object sender, EventArgs e)
         {
             marcarCoordenadas = true;
-            tipoDesenho = 1;
+            desenhoSelecionado = 1;
         }
 
         // Botão do retangulo 
         private void button2_Click(object sender, EventArgs e)
         {
             marcarCoordenadas = true;
-            tipoDesenho = 2;
+            desenhoSelecionado = 2;
         }
 
         // Botão do circulo 
@@ -200,7 +242,7 @@ namespace projeto2
             // InputBox: Interaction.InputBox("Informe o raio: ", "", "", 400, 400)
             raio = int.Parse(Interaction.InputBox("Informe o raio do círculo: ", "", "", 400, 400));
             marcarCoordenadas = true;
-            tipoDesenho = 3;
+            desenhoSelecionado = 3;
         }
 
         // Botão da elipse 
@@ -209,28 +251,42 @@ namespace projeto2
             largura = int.Parse(Interaction.InputBox("Informe a largura da elipse: ", "", "", 400, 400));
             altura = int.Parse(Interaction.InputBox("Informe a altura da elipse: ", "", "", 400, 400));
             marcarCoordenadas = true;
-            tipoDesenho = 4;
+            desenhoSelecionado = 4;
         }
 
         // Botão do triangulo
         private void button5_Click(object sender, EventArgs e)
         {
             marcarCoordenadas = true;
-            tipoDesenho = 5;
+            desenhoSelecionado = 5;
+        }
+
+        // Tipo de linha
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            formatoSelecionado = int.Parse(comboBox1.SelectedItem.ToString());
+            definirFormatoLinha(formatoSelecionado);
+        }
+
+        // Tipo de espessura
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            espessuraSelecionada = int.Parse(comboBox2.SelectedItem.ToString());
+            espessura = espessuraSelecionada * 3;
         }
 
         // Botão do losango
         private void button6_Click(object sender, EventArgs e)
         {
             marcarCoordenadas = true;
-            tipoDesenho = 6;
+            desenhoSelecionado = 6;
         }
 
         // Botão do pentagono
         private void button7_Click(object sender, EventArgs e)
         {
             marcarCoordenadas = true;
-            tipoDesenho = 7;
+            desenhoSelecionado = 7;
         }
     }
 }
