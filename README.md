@@ -3,16 +3,16 @@
   <img alt="Linguagens" src="https://img.shields.io/badge/autor-Bruno%20Shiohei%20Kinoshita%20do%20Nascimento-DB3833">
 </a>
 <a href="#">
-  <img alt="Estrelas" src="https://img.shields.io/github/stars/shioheii/projeto1-icg?color=DB3833">
+  <img alt="Estrelas" src="https://img.shields.io/github/stars/shioheii/projeto2-icg?color=DB3833">
 </a>
 <a href="#">
-  <img alt="UltimoCommit" src="https://img.shields.io/github/last-commit/shioheii/projeto1-icg?color=DB3833">
+  <img alt="UltimoCommit" src="https://img.shields.io/github/last-commit/shioheii/projeto2-icg?color=DB3833">
 </a>
 <a href="#">
-  <img alt="Linguagens" src="https://img.shields.io/github/languages/count/shioheii/projeto1-icg?color=DB3833">
+  <img alt="Linguagens" src="https://img.shields.io/github/languages/count/shioheii/projeto2-icg?color=DB3833">
 </a>
 <a href="#">
-  <img alt="Tamanho" src="https://img.shields.io/github/languages/code-size/shioheii/projeto1-icg?color=DB3833">
+  <img alt="Tamanho" src="https://img.shields.io/github/languages/code-size/shioheii/projeto2-icg?color=DB3833">
 </a><br />
 
 Projeto do 2° Bimestre da matéria de Introdução à Computação Gráfica
