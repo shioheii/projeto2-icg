@@ -7,7 +7,6 @@
  * Atividade Proposta em aula
  * Observação: <colocar se houver>
  * 
- * 
  * ******************************************************************/
 
 using System;
@@ -31,13 +30,15 @@ namespace projeto2
             InitializeComponent();
         }
 
-        bool desenharSalvos = false;
+        bool permitirSalvar = false;
         bool marcarCoordenadas = false;
         bool validarDesenho = false;
         int desenhoSelecionado = 0; // 1 - Reta / 2 - Retangulo / 3 - Circulo / 4 - Elipse / 5 - Trialgulo / 6 - Losango / 7 - Pentagono
         int clicks = 0;
         int[] coordenadas = new int[10];
-        int raio, altura, largura; // Caso da elipse e circulo
+        int raio = 0;               // Caso circulo   
+        int altura = 0;             // Caso elipse 
+        int largura = 0;            // Caso elipse 
         int indiceCoordenadas = 0;
         int formatoSelecionado = 1;
         float[] formatoLinha = { 1 };
@@ -78,12 +79,12 @@ namespace projeto2
 
         void circulo(int[] pontos, Pen caneta, PaintEventArgs e)
         {
-            e.Graphics.DrawEllipse(caneta, pontos[0], pontos[1], raio, raio);
+            e.Graphics.DrawEllipse(caneta, pontos[0]-(raio/2), pontos[1]-(raio/2), raio, raio);
         }
 
         void elipse(int[] pontos, Pen caneta, PaintEventArgs e)
         {
-            e.Graphics.DrawEllipse(caneta, pontos[0], pontos[1], altura, largura);
+            e.Graphics.DrawEllipse(caneta, pontos[0]-(largura/2), pontos[1]-(altura/2), largura, altura);
         }
 
         void triangulo(int[] pontos, Pen caneta, PaintEventArgs e)
@@ -95,16 +96,19 @@ namespace projeto2
 
         void losango(int[] pontos, Pen caneta, PaintEventArgs e)
         {
-            int[] indices = { 0, 1, 2, 3, 2, 3, 4, 5, 4, 5, 6, 7, 6, 7, 0, 1 };
-            for (int i = 0; i < indices.Length; i+=4)
-                linha(pontos[indices[i]], pontos[indices[i+1]], pontos[indices[i+2]], pontos[indices[i+3]], caneta, e);
+            linha(pontos[0], pontos[1] - 157, pontos[0] - 200, pontos[1], caneta, e);
+            linha(pontos[0] - 200, pontos[1], pontos[0], pontos[1] + 157, caneta, e);
+            linha(pontos[0], pontos[1] + 157, pontos[0] + 200, pontos[1], caneta, e);
+            linha(pontos[0] + 200, pontos[1], pontos[0], pontos[1] - 157, caneta, e);
         }
 
         void pentagono(int[] pontos, Pen caneta, PaintEventArgs e)
         {
-            int[] indices = { 0, 1, 2, 3, 2, 3, 4, 5, 4, 5, 6, 7, 6, 7, 8, 9, 8, 9, 0, 1 };
-            for (int i = 0; i < indices.Length; i+=4)
-                linha(pontos[indices[i]], pontos[indices[i+1]], pontos[indices[i+2]], pontos[indices[i+3]], caneta, e);
+            linha(pontos[0], pontos[1] - 150, pontos[0] - 96, pontos[1] - 23, caneta, e);
+            linha(pontos[0] - 96, pontos[1] - 23, pontos[0] - 60, pontos[1] + 130, caneta, e);
+            linha(pontos[0] - 60, pontos[1] + 130, pontos[0] + 60, pontos[1] + 130, caneta, e);
+            linha(pontos[0] + 60, pontos[1] + 130, pontos[0] + 96, pontos[1] - 23, caneta, e);
+            linha(pontos[0] + 96, pontos[1] - 23, pontos[0], pontos[1] - 150, caneta, e);
         }
 
         void definirFormatoLinha()
@@ -167,21 +171,17 @@ namespace projeto2
 
         int getQtdClicksDesenho()
         {
-            if (desenhoSelecionado == 1) // Linha
-                return 2;
-            if (desenhoSelecionado == 2) // Retangulo
-                return 2;
-            if (desenhoSelecionado == 3) // Circulo  
+            // Circulo || Elipse || Losango || Pentagono
+            if (desenhoSelecionado == 3 || desenhoSelecionado == 4 || desenhoSelecionado == 6 || desenhoSelecionado == 7)
                 return 1;
-            if (desenhoSelecionado == 4) // Elipse
-                return 1;
-            if (desenhoSelecionado == 5) // Triangulo
+            else if (desenhoSelecionado == 1) // Linha
+                return 2;
+            else if (desenhoSelecionado == 2) // Retangulo
+                return 2;
+            else if (desenhoSelecionado == 5) // Triangulo
                 return 3;
-            if (desenhoSelecionado == 6) // Losango
-                return 4;
-            if (desenhoSelecionado == 7) // Pentagono
-                return 5;
-            return -1;
+            else
+                return -1;
         }
 
         void permitirInvalidate()
@@ -195,7 +195,7 @@ namespace projeto2
 
         void desenharPaint(PaintEventArgs e)
         {
-            if (validarDesenho || desenharSalvos)
+            if (validarDesenho)
             {
                 definirCor();
                 definirFormatoLinha();
@@ -217,78 +217,62 @@ namespace projeto2
                 else if (desenhoSelecionado == 7)
                     pentagono(coordenadas, caneta, e);
 
-                if(!desenharSalvos)
-                    salvarDesenhos();
-
-                //marcarCoordenadas = false;
-                //tipoDesenho = 0;
                 validarDesenho = false;
                 indiceCoordenadas = 0;
                 clicks = 0;
-                desenharSalvos = true;
+                permitirSalvar = true;
             }
         }
 
-        void salvarDesenhos()
+        void salvarDesenhos(String path)
         {
             // Desenho // Cor // Formato // Espessura // Raio ou Largura e Altura // Coordenadas
 
             String txt = "" + desenhoSelecionado + " " + corSelecionada + " " + formatoSelecionado + " " + espessuraSelecionada + " ";
-            File.AppendAllText(@"C:\Users\user\Documents\INFORMATICA\PROJETOS\ICG\2 BIMESTRE\dados.txt", txt);
+            File.AppendAllText(@path, txt);
 
             if (desenhoSelecionado == 3)
-                File.AppendAllText(@"C:\Users\user\Documents\INFORMATICA\PROJETOS\ICG\2 BIMESTRE\dados.txt", raio + " ");
+                File.AppendAllText(@path, raio + " ");
             else if (desenhoSelecionado == 4)
-                File.AppendAllText(@"C:\Users\user\Documents\INFORMATICA\PROJETOS\ICG\2 BIMESTRE\dados.txt", largura + " " + altura + " ");
+                File.AppendAllText(@path, largura + " " + altura + " ");
 
             for (int i = 0; i < getQtdClicksDesenho() * 2; i++)
-                File.AppendAllText(@"C:\Users\user\Documents\INFORMATICA\PROJETOS\ICG\2 BIMESTRE\dados.txt", coordenadas[i] + " ");
-            File.AppendAllText(@"C:\Users\user\Documents\INFORMATICA\PROJETOS\ICG\2 BIMESTRE\dados.txt", "" + Environment.NewLine);
+                File.AppendAllText(@path, coordenadas[i] + " ");
+            File.AppendAllText(@path, Environment.NewLine);
         }
 
-        void pintarDesenhosSalvos(PaintEventArgs e)
+        void desenharSalvo(String path)
         {
-            // Desenho // Cor // Formato // Espessura // Raio ou Largura e Altura // Coordenadas
+            String desenho = File.ReadAllText(@path);
 
-            if (File.Exists(@"C:\\Users\\user\\Documents\\INFORMATICA\\PROJETOS\\ICG\\2 BIMESTRE\\dados.txt"))
+            if (desenho.Length > 0)
             {
-                String[] desenhos = File.ReadAllLines(@"C:\Users\user\Documents\INFORMATICA\PROJETOS\ICG\2 BIMESTRE\dados.txt");
+                int i = 0;
+                String[] dadosDesenho = desenho.Split(' ');
 
-                if (desenhos.Length > 0)
+                desenhoSelecionado = int.Parse(dadosDesenho[i++]);
+                corSelecionada = int.Parse(dadosDesenho[i++]);
+                formatoSelecionado = int.Parse(dadosDesenho[i++]);
+                espessura = int.Parse(dadosDesenho[i++]) * 3;
+
+                if (desenhoSelecionado == 3)
+                    raio = int.Parse(dadosDesenho[i++]);
+                else if (desenhoSelecionado == 4)
                 {
-                    foreach (String desenho in desenhos)
-                    {
-                        int i = 0;
-                        String[] dadosDesenho = desenho.Split(' ');
-
-                        desenhoSelecionado = int.Parse(dadosDesenho[i++]);
-                        corSelecionada = int.Parse(dadosDesenho[i++]);
-                        formatoSelecionado = int.Parse(dadosDesenho[i++]);
-                        espessura = int.Parse(dadosDesenho[i++]) * 3;
-
-                        if (desenhoSelecionado == 3)
-                            raio = int.Parse(dadosDesenho[i++]);
-                        else if (desenhoSelecionado == 4)
-                        {
-                            largura = int.Parse(dadosDesenho[i++]);
-                            altura = int.Parse(dadosDesenho[i++]);
-                        }
-
-                        for (int j = 0; j < getQtdClicksDesenho() * 2; j++)
-                            coordenadas[j] = int.Parse(dadosDesenho[i++]);
-
-                        desenharPaint(e);
-                    }
+                    largura = int.Parse(dadosDesenho[i++]);
+                    altura = int.Parse(dadosDesenho[i++]);
                 }
-                desenharSalvos = false;
+
+                for (int j = 0; j < getQtdClicksDesenho() * 2; j++)
+                    coordenadas[j] = int.Parse(dadosDesenho[i++]);
+
+                Invalidate();
             }
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
             desenharPaint(e);
-            if (desenharSalvos)
-                pintarDesenhosSalvos(e);
         }
 
         private void Form1_MouseClick(object sender, MouseEventArgs e)
@@ -320,8 +304,11 @@ namespace projeto2
         // Botão do circulo 
         private void button3_Click(object sender, EventArgs e)
         {
-            // InputBox: Interaction.InputBox("Informe o raio: ", "", "", 400, 400)
-            raio = int.Parse(Interaction.InputBox("Informe o raio do círculo: ", "", "", 400, 400));
+            string raioTeste = Interaction.InputBox("Informe o raio do círculo: ", "", "", 400, 400);
+            while (String.IsNullOrEmpty(raioTeste))
+                raioTeste = Interaction.InputBox("Informe o raio do círculo: ", "", "", 400, 400);
+            
+            raio = int.Parse(raioTeste);
             marcarCoordenadas = true;
             desenhoSelecionado = 3;
         }
@@ -329,8 +316,16 @@ namespace projeto2
         // Botão da elipse 
         private void button4_Click(object sender, EventArgs e)
         {
-            largura = int.Parse(Interaction.InputBox("Informe a largura da elipse: ", "", "", 400, 400));
-            altura = int.Parse(Interaction.InputBox("Informe a altura da elipse: ", "", "", 400, 400));
+            String larguraTeste = Interaction.InputBox("Informe a largura da elipse: ", "", "", 400, 400);
+            while (String.IsNullOrEmpty(larguraTeste))
+                larguraTeste = Interaction.InputBox("Informe a largura da elipse: ", "", "", 400, 400);
+
+            String alturaTeste = Interaction.InputBox("Informe a altura da elipse: ", "", "", 400, 400);
+            while (String.IsNullOrEmpty(alturaTeste))
+                alturaTeste = Interaction.InputBox("Informe a altura da elipse: ", "", "", 400, 400);
+            
+            largura = int.Parse(larguraTeste);
+            altura = int.Parse(alturaTeste);
             marcarCoordenadas = true;
             desenhoSelecionado = 4;
         }
@@ -453,6 +448,34 @@ namespace projeto2
         private void button27_Click(object sender, EventArgs e) //lavanda
         {
             corSelecionada = 20;            
+        }
+
+        private void button28_Click(object sender, EventArgs e)
+        {
+            if (permitirSalvar)
+            {
+                SaveFileDialog sfd = new SaveFileDialog();
+                sfd.Filter = "| *.dat";
+
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    String path = sfd.FileName;
+                    salvarDesenhos(path);
+                }
+            }
+        }
+
+        private void button29_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "| *.dat";
+
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                String path = ofd.FileName;
+                validarDesenho = true;
+                desenharSalvo(path);
+            }
         }
 
         // Botão do losango
