@@ -30,3 +30,14 @@ C:\Users\user\Downloads\projeto2\projeto2\obj\Debug\projeto2.csproj.GenerateReso
 C:\Users\user\Downloads\projeto2\projeto2\obj\Debug\projeto2.csproj.CoreCompileInputs.cache
 C:\Users\user\Downloads\projeto2\projeto2\obj\Debug\projeto2.exe
 C:\Users\user\Downloads\projeto2\projeto2\obj\Debug\projeto2.pdb
+F:\projetoICG\projeto2\projeto2\bin\Debug\projeto2.exe.config
+F:\projetoICG\projeto2\projeto2\bin\Debug\projeto2.exe
+F:\projetoICG\projeto2\projeto2\bin\Debug\projeto2.pdb
+F:\projetoICG\projeto2\projeto2\obj\Debug\projeto2.csproj.AssemblyReference.cache
+F:\projetoICG\projeto2\projeto2\obj\Debug\projeto2.csproj.SuggestedBindingRedirects.cache
+F:\projetoICG\projeto2\projeto2\obj\Debug\projeto2.Form1.resources
+F:\projetoICG\projeto2\projeto2\obj\Debug\projeto2.Properties.Resources.resources
+F:\projetoICG\projeto2\projeto2\obj\Debug\projeto2.csproj.GenerateResource.cache
+F:\projetoICG\projeto2\projeto2\obj\Debug\projeto2.csproj.CoreCompileInputs.cache
+F:\projetoICG\projeto2\projeto2\obj\Debug\projeto2.exe
+F:\projetoICG\projeto2\projeto2\obj\Debug\projeto2.pdb

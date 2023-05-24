@@ -111,6 +111,20 @@ namespace projeto2
             linha(pontos[0] + 96, pontos[1] - 23, pontos[0], pontos[1] - 150, caneta, e);
         }
 
+        void definirEspessura()
+        {
+            if (espessuraSelecionada == 1)
+                espessura = 1;
+            else if (espessuraSelecionada == 2)
+                espessura = 3;
+            else if (espessuraSelecionada == 3)
+                espessura = 6;
+            else if (espessuraSelecionada == 4)
+                espessura = 9;
+            else
+                espessura = 12;
+        }
+
         void definirFormatoLinha()
         {
             if (formatoSelecionado == 1)
@@ -184,21 +198,13 @@ namespace projeto2
                 return -1;
         }
 
-        void permitirInvalidate()
-        {
-            if (clicks == getQtdClicksDesenho())
-            {
-                validarDesenho = true;
-                Invalidate();
-            }
-        }
-
         void desenharPaint(PaintEventArgs e)
         {
             if (validarDesenho)
             {
                 definirCor();
                 definirFormatoLinha();
+                definirEspessura();
                 Color cor = color(RGB[0], RGB[1], RGB[2], e);
                 Pen caneta = criarCaneta(cor, formatoLinha, espessura, e);
 
@@ -253,7 +259,7 @@ namespace projeto2
                 desenhoSelecionado = int.Parse(dadosDesenho[i++]);
                 corSelecionada = int.Parse(dadosDesenho[i++]);
                 formatoSelecionado = int.Parse(dadosDesenho[i++]);
-                espessura = int.Parse(dadosDesenho[i++]) * 3;
+                espessuraSelecionada = int.Parse(dadosDesenho[i++]);
 
                 if (desenhoSelecionado == 3)
                     raio = int.Parse(dadosDesenho[i++]);
@@ -283,7 +289,11 @@ namespace projeto2
                 coordenadas[indiceCoordenadas++] = e.Y;
                 clicks++;
 
-                permitirInvalidate();
+                if (clicks == getQtdClicksDesenho())
+                {
+                    validarDesenho = true;
+                    Invalidate();
+                }
             }
         }
 
@@ -347,7 +357,6 @@ namespace projeto2
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
             espessuraSelecionada = int.Parse(comboBox2.SelectedItem.ToString());
-            espessura = espessuraSelecionada * 3;
         }
 
         private void button8_Click(object sender, EventArgs e) //cor preta
@@ -455,7 +464,7 @@ namespace projeto2
             if (permitirSalvar)
             {
                 SaveFileDialog sfd = new SaveFileDialog();
-                sfd.Filter = "| *.dat";
+                sfd.Filter = "(*.dat)|";
 
                 if (sfd.ShowDialog() == DialogResult.OK)
                 {
@@ -468,7 +477,7 @@ namespace projeto2
         private void button29_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "| *.dat";
+            ofd.Filter = "(*.dat)|";
 
             if (ofd.ShowDialog() == DialogResult.OK)
             {
