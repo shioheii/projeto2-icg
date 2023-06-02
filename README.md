@@ -23,7 +23,7 @@
 Projeto do 2° Bimestre da matéria de Introdução à Computação Gráfica
 
 ## Sobre o projeto
-A proposta do projeto era desenvolver uma interface que permita efetuar um “Graphical Editor”, semelhante ao Paint.
+A proposta do projeto era desenvolver uma interface que permita efetuar um “Graphical Editor”, semelhante ao Paint, onde seria possível realizar vários tipos de desenhos a partir do click do mouse.
 
 <img src="img/img1.PNG">
 
