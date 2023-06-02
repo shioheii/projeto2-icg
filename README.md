@@ -1,29 +1,36 @@
 # projeto2-icg
-<a href="https://github.com/shioheii">
-  <img alt="Linguagens" src="https://img.shields.io/badge/autor-Bruno%20Shiohei%20Kinoshita%20do%20Nascimento-DB3833">
-</a>
-<a href="#">
-  <img alt="Estrelas" src="https://img.shields.io/github/stars/shioheii/projeto2-icg?color=DB3833">
-</a>
-<a href="#">
-  <img alt="UltimoCommit" src="https://img.shields.io/github/last-commit/shioheii/projeto2-icg?color=DB3833">
-</a>
-<a href="#">
-  <img alt="Linguagens" src="https://img.shields.io/github/languages/count/shioheii/projeto2-icg?color=DB3833">
-</a>
-<a href="#">
-  <img alt="Tamanho" src="https://img.shields.io/github/languages/code-size/shioheii/projeto2-icg?color=DB3833">
-</a><br />
+<p align="center">
+  <a href="https://github.com/shioheii">
+    <img alt="Autor1" src="https://img.shields.io/badge/Autor 1-Bruno%20Shiohei%20Kinoshita%20do%20Nascimento-DB3833">
+  </a>
+  <a href="https://github.com/arthurfbn">
+    <img alt="Autor2" src="https://img.shields.io/badge/Autor 2-Arthur%20de%20Nazareth%20Falcão%20Braga-DB3833">
+  </a> <br>
+  <a href="#">
+    <img alt="Estrelas" src="https://img.shields.io/github/stars/shioheii/projeto2-icg?color=DB3833">
+  </a>
+  <a href="#">
+    <img alt="UltimoCommit" src="https://img.shields.io/github/last-commit/shioheii/projeto2-icg?color=DB3833">
+  </a>
+  <a href="#">
+    <img alt="Linguagens" src="https://img.shields.io/github/languages/count/shioheii/projeto2-icg?color=DB3833">
+  </a>
+  <a href="#">
+    <img alt="Tamanho" src="https://img.shields.io/github/languages/code-size/shioheii/projeto2-icg?color=DB3833">
+  </a><br />
+</p>
 
 Projeto do 2° Bimestre da matéria de Introdução à Computação Gráfica
 
 ## Sobre o projeto
-bla bla bla
+A proposta do projeto era desenvolver uma interface que permita efetuar um “Graphical Editor”, semelhante ao Paint.
 
 <img src="img/img1.PNG">
 
 ## O que aprendi?
-bla bla bla
+- Utilizar o conceito de primitivas gráficas de forma mais eficiente.
+- Criação de tipos de linha, cores e desenhos variados.
+- Salvar dados do desenho em um arquivo, e depois poder refazer este desenho, apenas abrindo o arquivo dentro do software.
 
 ## Recursos utilizados
 - Linguagem: C#
