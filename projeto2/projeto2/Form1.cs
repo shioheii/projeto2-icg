@@ -40,9 +40,9 @@ namespace projeto2
         int altura = 0;             // Caso elipse 
         int largura = 0;            // Caso elipse 
         int indiceCoordenadas = 0;
-        int formatoSelecionado = 1;
+        int formatoSelecionado = 0;
         float[] formatoLinha = { 1 };
-        int espessuraSelecionada = 1;
+        int espessuraSelecionada = 2;
         int espessura = 1;
         int corSelecionada = 1;
         int[] RGB = new int[3] { 0, 0, 0 };
@@ -96,19 +96,19 @@ namespace projeto2
 
         void losango(int[] pontos, Pen caneta, PaintEventArgs e)
         {
-            linha(pontos[0], pontos[1] - 157, pontos[0] - 200, pontos[1], caneta, e);
-            linha(pontos[0] - 200, pontos[1], pontos[0], pontos[1] + 157, caneta, e);
-            linha(pontos[0], pontos[1] + 157, pontos[0] + 200, pontos[1], caneta, e);
-            linha(pontos[0] + 200, pontos[1], pontos[0], pontos[1] - 157, caneta, e);
+            linha(pontos[0], pontos[1] - 78, pontos[0] - 100, pontos[1], caneta, e);
+            linha(pontos[0] - 100, pontos[1], pontos[0], pontos[1] + 78, caneta, e);
+            linha(pontos[0], pontos[1] + 78, pontos[0] + 100, pontos[1], caneta, e);
+            linha(pontos[0] + 100, pontos[1], pontos[0], pontos[1] - 78, caneta, e);
         }
 
         void pentagono(int[] pontos, Pen caneta, PaintEventArgs e)
         {
-            linha(pontos[0], pontos[1] - 150, pontos[0] - 96, pontos[1] - 23, caneta, e);
-            linha(pontos[0] - 96, pontos[1] - 23, pontos[0] - 60, pontos[1] + 130, caneta, e);
-            linha(pontos[0] - 60, pontos[1] + 130, pontos[0] + 60, pontos[1] + 130, caneta, e);
-            linha(pontos[0] + 60, pontos[1] + 130, pontos[0] + 96, pontos[1] - 23, caneta, e);
-            linha(pontos[0] + 96, pontos[1] - 23, pontos[0], pontos[1] - 150, caneta, e);
+            linha(pontos[0], pontos[1] - 120, pontos[0] - 96, pontos[1] - 23, caneta, e);
+            linha(pontos[0] - 96, pontos[1] - 23, pontos[0] - 60, pontos[1] + 90, caneta, e);
+            linha(pontos[0] - 60, pontos[1] + 90, pontos[0] + 60, pontos[1] + 90, caneta, e);
+            linha(pontos[0] + 60, pontos[1] + 90, pontos[0] + 96, pontos[1] - 23, caneta, e);
+            linha(pontos[0] + 96, pontos[1] - 23, pontos[0], pontos[1] - 120, caneta, e);
         }
 
         void definirEspessura()
@@ -127,13 +127,13 @@ namespace projeto2
 
         void definirFormatoLinha()
         {
-            if (formatoSelecionado == 1)
+            if (formatoSelecionado == 0)
                 formatoLinha = new float[1] { 1 };
-            else if (formatoSelecionado == 2)
+            else if (formatoSelecionado == 1)
                 formatoLinha = new float[2] { 2, 2 };
-            else if (formatoSelecionado == 3)
+            else if (formatoSelecionado == 2)
                 formatoLinha = new float[2] { 10, 5 };
-            else if (formatoSelecionado == 4)
+            else if (formatoSelecionado == 3)
                 formatoLinha = new float[4] { 10, 3, 2, 3 };
             else
                 formatoLinha = new float[4] { 20, 4, 10, 4 };
@@ -347,10 +347,24 @@ namespace projeto2
             desenhoSelecionado = 5;
         }
 
+        // Botão do losango
+        private void button6_Click(object sender, EventArgs e)
+        {
+            marcarCoordenadas = true;
+            desenhoSelecionado = 6;
+        }
+
+        // Botão do pentagono
+        private void button7_Click(object sender, EventArgs e)
+        {
+            marcarCoordenadas = true;
+            desenhoSelecionado = 7;
+        }
+
         // Tipo de linha
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            formatoSelecionado = int.Parse(comboBox1.SelectedItem.ToString());
+            formatoSelecionado = int.Parse(comboBox1.SelectedIndex.ToString());
         }
 
         // Tipo de espessura
@@ -487,18 +501,6 @@ namespace projeto2
             }
         }
 
-        // Botão do losango
-        private void button6_Click(object sender, EventArgs e)
-        {
-            marcarCoordenadas = true;
-            desenhoSelecionado = 6;
-        }
-
-        // Botão do pentagono
-        private void button7_Click(object sender, EventArgs e)
-        {
-            marcarCoordenadas = true;
-            desenhoSelecionado = 7;
-        }
+        
     }
 }
